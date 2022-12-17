@@ -41,4 +41,7 @@ const requestHandler = (req, res) => {
     res.write('</html>');
 }
 
-module.exports = requestHandler;
+module.exports = {
+    handler: requestHandler,
+    someData: 'someata'
+};
