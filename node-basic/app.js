@@ -1,15 +1,24 @@
 const express = require('express');
+const parser = require('body-parser');
 
 const app = express();
 
-app.use((req, res, next) => {
-    console.log('in middlware...');
-    next();
+app.use(parser.urlencoded({extended: false}));
+
+// '/add-product' ==> '/add-product/**'
+app.use('/add-product', (req, res, next) => {
+    res.send('<form action="/product" method="POST"><input type="text" name="title"><button type="submit">add</button></input></form>');
 });
 
-app.use((req, res, next) => {
-    console.log('in another middlware...');
-    res.send('<h1>hello</h1>');
+app.post('/product', (req, res, next) => {
+    console.log(req.body);
+    res.redirect('/');
+})
+
+
+// '/' ==> '/**'
+app.use('/', (req, res, next) => {
+    res.send('<h1>root</h1>');
 });
 
 
