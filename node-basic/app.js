@@ -1,10 +1,16 @@
-const http = require('http');
-const routes = require('./routes')
+const express = require('express');
 
-const server = http.createServer(
-    routes.handler
-);
+const app = express();
 
-console.log(routes.someData);
+app.use((req, res, next) => {
+    console.log('in middlware...');
+    next();
+});
 
-server.listen(3000);
+app.use((req, res, next) => {
+    console.log('in another middlware...');
+    res.send('<h1>hello</h1>');
+});
+
+
+app.listen(3000);
